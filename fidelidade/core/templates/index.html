@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartão Fidelidade Linhares</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>🌟 Cartão Fidelidade Linhares 🌟</h1>
+    </header>
+    <main>
+        <section class="form-container">
+            <h2>Register Purchase</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" name="phone" placeholder="Phone" required>
+                <input type="number" step="0.01" name="amount_spent" placeholder="Amount Spent" required>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+
+        <section class="search-container">
+            <h2>Check Customer Points</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="search_name" placeholder="Enter Customer Name" required>
+                <button type="submit">Search</button>
+            </form>
+            {% if selected_customer %}
+            <div class="customer-info">
+                <h3>Customer: {{ selected_customer.name }}</h3>
+                <p>Phone: {{ selected_customer.phone }}</p>
+                <p>Points: {{ selected_customer.points }}</p>
+                <label for="progress-bar">Progress:</label>
+                <progress id="progress-bar" value="{{ selected_customer.points }}" max="{{ progress_bar_max }}"></progress>
+            </div>
+            {% endif %}
+        </section>
+
+        {% if congratulation_message %}
+        <section class="congratulations">
+            <h2>{{ congratulation_message }}</h2>
+        </section>
+        {% endif %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Savioluz.dev</p>
+    </footer>
+</body>
+</html>
